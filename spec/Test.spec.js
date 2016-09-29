@@ -4,12 +4,18 @@ function Tennis(){
 	let scorebaseA ;
 	let scorebaseB ;
 
-	this.start = function(){
-		return this.echo();
-	}
-
-	this.echo = function(){
-		return scorebaseA +' - '+ scorebaseB;
+	this.echo = function(scorebaseA,scorebaseB){
+		if(scorebaseA!=5&&scorebaseB!=5){
+			return scorebaseA +' - '+ scorebaseB;
+		}
+		else if(scorebaseA===5){
+			return 'Player A won';
+			scorebaseA = 0;
+		}
+		else if(scorebaseB===5){
+			return 'Player B won';
+			scorebaseB = 0;
+		}
 	}
 
 	this.getscoreA = function(){
@@ -26,10 +32,7 @@ function Tennis(){
 		else if(scoreA===4){
 			return scorebaseA = 'Forty';
 		}
-		else if(scoreA===5){
-			return 'Player A won';
-		}
-		return this.echo();
+		return this.echo(scorebaseA);
 	}
 
 	this.getscoreB = function(){
@@ -46,35 +49,46 @@ function Tennis(){
 		else if(scoreB===4){
 			return scorebaseB = 'Forty';
 		}
-		else if(scoreB===5){
-			return 'Player B won';
-		}
-		return this.echo();
+		return this.echo(scorebaseB);
 	}
 }
-var Player = new Tennis();
 describe('Tennis()', function() {
-
+var Player = new Tennis();
   it('should be "Love-Love" when Start game', function() {
-    expect(Player.start()).toBe('Love-Love');
+    expect(Player.echo()).toEqual('Love-Love');
   });
 
   it('should be "Fifteen-Love" when A get score 1-0',function(){
-    expect(Player.getscoreA()).toBe('Fifteen-Love');
+    expect(Player.getscoreA()).toEqual('Fifteen-Love');
   });
    it('should be "Thirty-Love" when A get score 2-0',function(){
-    expect(Player.getscoreA()).toBe('Thirty-Love');
+    expect(Player.getscoreA()).toEqual('Thirty-Love');
   });
     it('should be "Forty-Love" when A get score 3-0',function(){
-    expect(Player.getscoreA()).toBe('Forty-Love');
+    expect(Player.getscoreA()).toEqual('Forty-Love');
+  });
+    it('should  be  "A won the game" when A win',function(){
+   expect(Player.getscoreA()).toEqual('A won the game');
   });
     it('should be "Love-Fifteen" when B get score 0-1',function(){
-    expect(Player.getscoreB()).toBe('Love-Fifteen');
+    expect(Player.getscoreB()).toEqual('Love-Fifteen');
   });
     it('should be "Love-Thirty" when B get score 0-2',function(){
-    expect(Player.getscoreB()).toBe('Love-Thirty');
+    expect(Player.getscoreB()).toEqual('Love-Thirty');
   });
     it('should be "Love-Forty" when B get score 0-3',function(){
-    expect(Player.getscoreB()).toBe('Love-Forty');
+    expect(Player.getscoreB()).toEqual('Love-Forty');
+  });
+    it('should  be  "A won the game" when B win',function(){
+   expect(Player.getscoreB()).toEqual('B won the game');
+  });
+  it('should be "Fifteen-Fifteen" when A or B get score 1-1',function(){
+	Player.getscoreA();
+	Player.getscoreB()
+    expect(Player.echo()).toEqual('Fifteen-Fifteen');
+  });
+  it('should be "Thirty-Fifteen" when A get score 2-1',function(){
+	Player.getscoreA()
+    expect(Player.echo()).toEqual('Thirty-Fifteen');
   });
 });
